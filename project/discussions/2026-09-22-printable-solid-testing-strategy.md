@@ -38,7 +38,6 @@ Date: 2026-09-22
 
 ## Open Questions
 
-- Intended Git repository name, remote owner, and integration branch.
 - Final virtual-profile numerical limits and whether a second slow/reference
   profile is useful.
 - Which physical test equipment and load ranges are available.
@@ -52,4 +51,5 @@ Date: 2026-09-22
 - Auto-Atumnus 0.1.0 requires a context-registered canonical Git worktree. The
   rewritten Body and Work Orders target `kellyjanderson/Herculean-Columns`,
   strict schema version 1, `codex-native`, and pull-request delivery. The GitHub
-  repository and registration must exist before the Body can be admitted.
+  repository now exists; Auto-Atumnus registration remains required before the
+  Body can be admitted.

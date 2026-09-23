@@ -146,22 +146,16 @@ phase.
 ## Admission prerequisites
 
 Auto-Atumnus 0.1.0 starts only against a context-registered canonical Git
-worktree. The folder is not currently a Git repository, and the intended
-`kellyjanderson/Herculean-Columns` GitHub repository does not yet exist. Before
-starting the Body:
+worktree. This folder is now a standalone Git repository whose `main` branch is
+published to the public `kellyjanderson/Herculean-Columns` GitHub repository.
+Before starting the Body:
 
-1. create or designate `kellyjanderson/Herculean-Columns` on GitHub, or revise
-   every Body and Work Order project field together before first admission;
-2. initialize/clone one standalone canonical worktree with in-workspace Git
-   metadata and an `origin` resolving to that exact GitHub repository;
-3. establish `main`, commit these project documents and historical v0.2 inputs,
-   and push the base commit;
-4. register that exact project/workspace/repository with the installed
+1. register this exact project/workspace/repository with the installed
    Auto-Atumnus context using adapter `codex-native` and its admitted sandbox;
-5. verify Git refs/index/objects/worktree writes plus GitHub authentication,
+2. verify Git refs/index/objects/worktree writes plus GitHub authentication,
    push, PR/check observation, merge, integration restoration, and owned-branch
    deletion; and
-6. validate the workspace-relative Body path through the installed service.
+3. validate the workspace-relative Body path through the installed service.
 
 The intended installed-service sequence is:
 
@@ -175,8 +169,8 @@ auto-atumnus start kellyjanderson/Herculean-Columns \
   project/bodies/HC-PRINTABLE-SOLID-001.yaml --detach
 ```
 
-These commands are documentation, not evidence that the repository or
-registration already exists.
+These commands are documentation, not evidence that Auto-Atumnus registration
+already exists.
 
 Local strict-schema validation proves definition consistency only. It does not
 substitute for registered-project admission, installed-service validation, or
