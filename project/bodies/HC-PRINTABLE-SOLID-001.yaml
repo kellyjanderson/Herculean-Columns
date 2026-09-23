@@ -1,0 +1,24 @@
+schema_version: 1
+id: HC-PRINTABLE-SOLID-001
+title: Herculean Columns printable solid and measurable comparison
+project: kellyjanderson/Herculean-Columns
+defaults:
+  adapter_profile: codex-native
+  on_error: agent_repair
+  delivery: pull_request
+  mcp_policy: project-approved
+work_orders:
+  - id: HC-PS-010
+    path: ../work-orders/HC-PS-010-project-foundation-graph-correctness.md
+  - id: HC-PS-020
+    path: ../work-orders/HC-PS-020-solid-materialization.md
+    needs: [HC-PS-010]
+  - id: HC-PS-030
+    path: ../work-orders/HC-PS-030-parametric-fixtures-inspection.md
+    needs: [HC-PS-020]
+  - id: HC-PS-040
+    path: ../work-orders/HC-PS-040-python-slicing-benchmark.md
+    needs: [HC-PS-030]
+  - id: HC-PS-050
+    path: ../work-orders/HC-PS-050-comparison-physical-protocol.md
+    needs: [HC-PS-040]

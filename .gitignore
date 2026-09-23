@@ -1,0 +1,37 @@
+# macOS metadata
+.DS_Store
+._*
+.AppleDouble
+.LSOverride
+.Spotlight-V100
+.Trashes
+.fseventsd
+.DocumentRevisions-V100
+.TemporaryItems
+
+# Editors and local history
+.history/
+.vscode/
+.idea/
+
+# Python-generated state
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+build/
+dist/
+
+# Temporary and machine-generated print outputs
+*.log
+tmp/
+temp/
+gcode/
+*.gcode
+*.bgcode
+*.tmp
+*.bak
