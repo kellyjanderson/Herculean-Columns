@@ -10,8 +10,11 @@ readme = "README.md"
 requires-python = ">=3.12"
 license = { text = "MIT" }
 dependencies = [
+  "manifold3d==3.5.3",
   "pydantic==2.12.5",
+  "rtree==1.4.1",
   "shapely==2.1.2",
+  "trimesh==5.1.0",
 ]
 
 [project.optional-dependencies]
@@ -33,6 +36,9 @@ testpaths = ["tests"]
 pythonpath = ["src"]
 addopts = "--strict-markers --strict-config"
 markers = [
+  "export: artifact export and independent readback coverage",
+  "geometry: solid geometry and boolean coverage",
+  "materialize: materialization pipeline coverage",
   "unit: focused unit coverage",
   "regression: named historical defect coverage",
 ]
