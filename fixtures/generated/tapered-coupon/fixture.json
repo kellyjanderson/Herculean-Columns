@@ -1,0 +1,83 @@
+{
+  "acceptance_tolerance_mm": 0.08,
+  "build_orientation": [
+    0.0,
+    0.0,
+    1.0
+  ],
+  "critical_surfaces": [
+    "z_min",
+    "z_max"
+  ],
+  "dimensions_mm": [
+    20.0,
+    20.0,
+    24.0
+  ],
+  "expected_component_count": 1,
+  "expected_graph_properties": [
+    "stable monotonic identities",
+    "members remain inside taper"
+  ],
+  "fixture_id": "tapered-coupon",
+  "label": null,
+  "physical_setup": "compress between the parallel end faces",
+  "provenance": {
+    "generator": "herculean_columns.fixtures.corpus",
+    "source_kind": "parametric",
+    "units": "mm"
+  },
+  "purpose": "variable cross-section and identity stability",
+  "schema_version": 1,
+  "variants": [
+    {
+      "achieved_infill_percent": 0.15808487413120398,
+      "configuration_sha256": "10a157fb1d0e12474f851fd6d3ef3e1f0b6e40f72fd1a62f9f9f712e352edb50",
+      "infill_percent": 10.0,
+      "inspection": {
+        "exterior_bounds_deviation_mm": 0.0,
+        "exterior_equivalent": true,
+        "output": {
+          "bounds_mm": [
+            [
+              -10.0,
+              -10.0,
+              -12.0
+            ],
+            [
+              10.0,
+              10.0,
+              12.0
+            ]
+          ],
+          "component_count": 1,
+          "volume_mm3": 2142.3047327458853,
+          "watertight": true,
+          "winding_consistent": true
+        },
+        "source": {
+          "bounds_mm": [
+            [
+              -10.0,
+              -10.0,
+              -12.0
+            ],
+            [
+              10.0,
+              10.0,
+              12.0
+            ]
+          ],
+          "component_count": 1,
+          "volume_mm3": 5468.7719620332855,
+          "watertight": true,
+          "winding_consistent": true
+        },
+        "valid": true
+      },
+      "manifest": "source-herculean-e73483002a05a742.manifest.json",
+      "preview": "source-herculean-e73483002a05a742.preview.svg",
+      "stl": "source-herculean-e73483002a05a742.stl"
+    }
+  ]
+}

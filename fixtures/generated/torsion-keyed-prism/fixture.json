@@ -1,0 +1,84 @@
+{
+  "acceptance_tolerance_mm": 0.08,
+  "build_orientation": [
+    0.0,
+    0.0,
+    1.0
+  ],
+  "critical_surfaces": [
+    "x_min",
+    "x_max",
+    "key_flats"
+  ],
+  "dimensions_mm": [
+    50.0,
+    16.0,
+    19.0
+  ],
+  "expected_component_count": 1,
+  "expected_graph_properties": [
+    "axial structural continuity",
+    "single grounded component"
+  ],
+  "fixture_id": "torsion-keyed-prism",
+  "label": null,
+  "physical_setup": "clamp the keyed X end faces and apply axial torque",
+  "provenance": {
+    "generator": "herculean_columns.fixtures.corpus",
+    "source_kind": "parametric",
+    "units": "mm"
+  },
+  "purpose": "torsional coupling",
+  "schema_version": 1,
+  "variants": [
+    {
+      "achieved_infill_percent": 0.09846155132561772,
+      "configuration_sha256": "10a157fb1d0e12474f851fd6d3ef3e1f0b6e40f72fd1a62f9f9f712e352edb50",
+      "infill_percent": 10.0,
+      "inspection": {
+        "exterior_bounds_deviation_mm": 0.0,
+        "exterior_equivalent": true,
+        "output": {
+          "bounds_mm": [
+            [
+              -25.0,
+              -8.0,
+              -8.0
+            ],
+            [
+              25.0,
+              8.0,
+              11.0
+            ]
+          ],
+          "component_count": 1,
+          "volume_mm3": 4671.415082468714,
+          "watertight": true,
+          "winding_consistent": true
+        },
+        "source": {
+          "bounds_mm": [
+            [
+              -25.0,
+              -8.0,
+              -8.0
+            ],
+            [
+              25.0,
+              8.0,
+              11.0
+            ]
+          ],
+          "component_count": 1,
+          "volume_mm3": 12872.0,
+          "watertight": true,
+          "winding_consistent": true
+        },
+        "valid": true
+      },
+      "manifest": "source-herculean-be0e10d374633f37.manifest.json",
+      "preview": "source-herculean-be0e10d374633f37.preview.svg",
+      "stl": "source-herculean-be0e10d374633f37.stl"
+    }
+  ]
+}

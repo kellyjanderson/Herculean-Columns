@@ -1,0 +1,83 @@
+{
+  "acceptance_tolerance_mm": 0.08,
+  "build_orientation": [
+    0.0,
+    0.0,
+    1.0
+  ],
+  "critical_surfaces": [
+    "z_max",
+    "support_lines"
+  ],
+  "dimensions_mm": [
+    80.0,
+    12.0,
+    10.0
+  ],
+  "expected_component_count": 1,
+  "expected_graph_properties": [
+    "shell anchors span the bar",
+    "single grounded component"
+  ],
+  "fixture_id": "three-point-bending-bar",
+  "label": null,
+  "physical_setup": "support at X=-30/+30 mm and load at X=0 on the top face",
+  "provenance": {
+    "generator": "herculean_columns.fixtures.corpus",
+    "source_kind": "parametric",
+    "units": "mm"
+  },
+  "purpose": "repeatable three-point bending",
+  "schema_version": 1,
+  "variants": [
+    {
+      "achieved_infill_percent": 0.2382668707137624,
+      "configuration_sha256": "10a157fb1d0e12474f851fd6d3ef3e1f0b6e40f72fd1a62f9f9f712e352edb50",
+      "infill_percent": 10.0,
+      "inspection": {
+        "exterior_bounds_deviation_mm": 0.0,
+        "exterior_equivalent": true,
+        "output": {
+          "bounds_mm": [
+            [
+              -40.0,
+              -6.0,
+              -5.0
+            ],
+            [
+              40.0,
+              6.0,
+              5.0
+            ]
+          ],
+          "component_count": 1,
+          "volume_mm3": 4525.453953537922,
+          "watertight": true,
+          "winding_consistent": true
+        },
+        "source": {
+          "bounds_mm": [
+            [
+              -40.0,
+              -6.0,
+              -5.0
+            ],
+            [
+              40.0,
+              6.0,
+              5.0
+            ]
+          ],
+          "component_count": 1,
+          "volume_mm3": 9600.0,
+          "watertight": true,
+          "winding_consistent": true
+        },
+        "valid": true
+      },
+      "manifest": "source-herculean-20e63eeb71edfbf6.manifest.json",
+      "preview": "source-herculean-20e63eeb71edfbf6.preview.svg",
+      "stl": "source-herculean-20e63eeb71edfbf6.stl"
+    }
+  ]
+}

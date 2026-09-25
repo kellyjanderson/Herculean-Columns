@@ -1,0 +1,181 @@
+{
+  "acceptance_tolerance_mm": 0.08,
+  "build_orientation": [
+    0.0,
+    0.0,
+    1.0
+  ],
+  "critical_surfaces": [
+    "z_min",
+    "z_max"
+  ],
+  "dimensions_mm": [
+    20.0,
+    20.0,
+    20.0
+  ],
+  "expected_component_count": 1,
+  "expected_graph_properties": [
+    "single grounded component",
+    "no escaped swept members"
+  ],
+  "fixture_id": "convex-box",
+  "label": null,
+  "physical_setup": "compress between parallel platens on the Z faces",
+  "provenance": {
+    "generator": "herculean_columns.fixtures.corpus",
+    "source_kind": "parametric",
+    "units": "mm"
+  },
+  "purpose": "containment, grounding, roof support, and compression",
+  "schema_version": 1,
+  "variants": [
+    {
+      "achieved_infill_percent": 0.08868998904338238,
+      "configuration_sha256": "834593e373fdd34ccae6eeedfe502dc0836ead3adc2ecddf825f0f02c03dc8d2",
+      "infill_percent": 5.0,
+      "inspection": {
+        "exterior_bounds_deviation_mm": 0.0,
+        "exterior_equivalent": true,
+        "output": {
+          "bounds_mm": [
+            [
+              -10.0,
+              -10.0,
+              -10.0
+            ],
+            [
+              10.0,
+              10.0,
+              10.0
+            ]
+          ],
+          "component_count": 1,
+          "volume_mm3": 2941.0373142262506,
+          "watertight": true,
+          "winding_consistent": true
+        },
+        "source": {
+          "bounds_mm": [
+            [
+              -10.0,
+              -10.0,
+              -10.0
+            ],
+            [
+              10.0,
+              10.0,
+              10.0
+            ]
+          ],
+          "component_count": 1,
+          "volume_mm3": 8000.0,
+          "watertight": true,
+          "winding_consistent": true
+        },
+        "valid": true
+      },
+      "manifest": "source-herculean-81a8a1ba1356f1ff.manifest.json",
+      "preview": "source-herculean-81a8a1ba1356f1ff.preview.svg",
+      "stl": "source-herculean-81a8a1ba1356f1ff.stl"
+    },
+    {
+      "achieved_infill_percent": 0.1723993756269146,
+      "configuration_sha256": "10a157fb1d0e12474f851fd6d3ef3e1f0b6e40f72fd1a62f9f9f712e352edb50",
+      "infill_percent": 10.0,
+      "inspection": {
+        "exterior_bounds_deviation_mm": 0.0,
+        "exterior_equivalent": true,
+        "output": {
+          "bounds_mm": [
+            [
+              -10.0,
+              -10.0,
+              -10.0
+            ],
+            [
+              10.0,
+              10.0,
+              10.0
+            ]
+          ],
+          "component_count": 1,
+          "volume_mm3": 2945.640606015348,
+          "watertight": true,
+          "winding_consistent": true
+        },
+        "source": {
+          "bounds_mm": [
+            [
+              -10.0,
+              -10.0,
+              -10.0
+            ],
+            [
+              10.0,
+              10.0,
+              10.0
+            ]
+          ],
+          "component_count": 1,
+          "volume_mm3": 8000.0,
+          "watertight": true,
+          "winding_consistent": true
+        },
+        "valid": true
+      },
+      "manifest": "source-herculean-d47b8e48e9adaf8a.manifest.json",
+      "preview": "source-herculean-d47b8e48e9adaf8a.preview.svg",
+      "stl": "source-herculean-d47b8e48e9adaf8a.stl"
+    },
+    {
+      "achieved_infill_percent": 0.2561085271422295,
+      "configuration_sha256": "42625f4c7f4ccbc78fe09f810ad40e2f3dc3509297a16b133a5ad036c2771c8b",
+      "infill_percent": 15.0,
+      "inspection": {
+        "exterior_bounds_deviation_mm": 0.0,
+        "exterior_equivalent": true,
+        "output": {
+          "bounds_mm": [
+            [
+              -10.0,
+              -10.0,
+              -10.0
+            ],
+            [
+              10.0,
+              10.0,
+              10.0
+            ]
+          ],
+          "component_count": 1,
+          "volume_mm3": 2950.2438836529814,
+          "watertight": true,
+          "winding_consistent": true
+        },
+        "source": {
+          "bounds_mm": [
+            [
+              -10.0,
+              -10.0,
+              -10.0
+            ],
+            [
+              10.0,
+              10.0,
+              10.0
+            ]
+          ],
+          "component_count": 1,
+          "volume_mm3": 8000.0,
+          "watertight": true,
+          "winding_consistent": true
+        },
+        "valid": true
+      },
+      "manifest": "source-herculean-197315c3a1246e12.manifest.json",
+      "preview": "source-herculean-197315c3a1246e12.preview.svg",
+      "stl": "source-herculean-197315c3a1246e12.stl"
+    }
+  ]
+}
