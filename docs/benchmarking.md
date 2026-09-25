@@ -25,38 +25,14 @@ Creality Print 7.1.1.4472 / `Creality-01.09.03.50` currently exits via
 including with vendor profiles and during CLI import. Do not reinterpret that
 crash as import compatibility evidence and do not automate the GUI.
 
-For an Orca matrix selected because this qualification failed, use the guided
-receipt command below. It discovers the installed Creality bundle and engine
-identity, prints the exact model path and SHA-256, and waits for a person to
-manually import that model and enter Preview. It does not launch, control, or
-inspect the GUI. The receipt is written only after both hash-bound confirmation
-phrases are entered, and an existing receipt is never overwritten.
+HC-PS-040's qualification is disjunctive: a verified printable solid, a
+complete real Creality matrix, or a complete real Orca matrix is sufficient.
+When Creality's CLI/importer crashes, retain its logs and select Orca with
+`--fallback-from-creality-failure`; do not require a manual GUI receipt to use
+a passing Orca result. The manifest must record Creality GUI compatibility as
+unverified. A solid-only pass must state that slicer metrics are unavailable
+and must not claim a comparison result.
 
-```sh
-PYTHONPATH=src .venv/bin/python -P -m herculean_columns.benchmark.compatibility \
-  fixtures/generated/convex-box/source-herculean-81a8a1ba1356f1ff.stl \
-  benchmark-results/creality-import-receipt.json
-```
-
-The resulting JSON has these fields. The observer is human-supplied and the
-observation time is generated only after the Preview confirmation.
-
-```json
-{
-  "schema_version": 1,
-  "model_sha256": "<sha256 of the imported STL>",
-  "bundle_version": "7.1.1.4472",
-  "engine_version": "Creality-01.09.03.50",
-  "observer": "<person who performed the check>",
-  "observed_at": "<ISO-8601 timestamp>",
-  "import_succeeded": true,
-  "preview_succeeded": true
-}
-```
-
-Run the normal Orca command with both `--fallback-from-creality-failure` and
-`--creality-import-receipt <receipt.json>`. Missing, negative, malformed, or
-wrong-model receipts close the compatibility gate. The fallback command also
-re-discovers Creality Print and rejects a receipt whose bundle or engine
-identity no longer matches the installed application. A normal Orca cross-check
-after a successful Creality qualification does not use the fallback flag.
+The optional human receipt helper remains available for a later, explicitly
+requested Creality GUI compatibility study. It is not part of the release gate
+and must not block a successful solid, Creality, or Orca evidence path.

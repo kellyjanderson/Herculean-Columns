@@ -23,21 +23,24 @@ completion:
   delivery: pull_request
   merge: agent
   required_checks: [unit, integration, benchmark-smoke, typecheck]
+  qualification:
+    any_of: [printable_solid, creality_matrix, orca_matrix]
 ---
 
 # Context
 
 Python owns benchmark orchestration, but authoritative FDM time and G-code must
 come from a mature slicer rather than a newly invented path planner. Creality
-Print is the user's preferred workflow and is the primary backend target. The
+Print is preferred when it qualifies, but is not a mandatory prerequisite. The
 currently installed bundle is 7.1.1.4472; its CLI reports engine identity
 `Creality-01.09.03.50` and exposes slicing, profile loading, isolated data
 directories, and export operations at
 `/Applications/Creality Print.app/Contents/MacOS/CrealityPrint`.
 
 OrcaSlicer 2.3.2 is also installed and exposes a closely related CLI at
-`/Applications/OrcaSlicer.app/Contents/MacOS/OrcaSlicer`; it is the fallback and
-cross-check backend. Installed state must always be discovered at runtime.
+`/Applications/OrcaSlicer.app/Contents/MacOS/OrcaSlicer`; it is an accepted
+alternative backend, not merely a diagnostic cross-check. Installed state
+must always be discovered at runtime.
 These paths and versions are current evidence, not portable hard-coded
 dependencies.
 
@@ -90,10 +93,20 @@ provenance-complete JSON and tabular results plus retained G-code and logs.
 - Detect profile drift, fallback to user defaults, changed source transforms,
   stale outputs, partial runs, timeouts, unsupported patterns, and parse errors
   as structured failures.
+- Qualification is explicitly disjunctive: the Work Order passes when at least
+  one of these evidence paths succeeds: (a) an independently read-back,
+  printable, watertight single-body solid; (b) the complete real Creality Print
+  benchmark; or (c) the complete real OrcaSlicer benchmark. Do not require all
+  alternatives to pass.
 - Prefer Creality Print when its qualification gate passes. If it fails, retain
-  the failure evidence and use Orca only through an explicit recorded fallback
-  decision. Regardless of benchmark backend, verify the resulting STL/3MF opens
-  as an ordinary printable model in Creality Print.
+  the failure evidence and run the full matrix in OrcaSlicer. A passing Orca
+  matrix satisfies the backend gate without a Creality GUI import/Preview
+  receipt. Record Creality compatibility as unverified when its importer also
+  crashes; never claim the Orca result proves Creality compatibility.
+- Preserve valid solid readback as an independent acceptance path. If no real
+  slicer succeeds but the solid path does, report slicer metrics as unavailable
+  and make no slicer comparison claims; do not turn missing optional backend
+  evidence into an error-gate stop.
 
 # Boundaries
 
@@ -109,8 +122,9 @@ metric omission, and cross-variant process drift. Use the fake backend for fast
 unit coverage. Run the Creality Print qualification and integration smoke test
 first on the convex fixture. If it passes, run the required five-variant matrix with
 Creality Print in a temporary isolated data directory and cross-check at least
-one variant in Orca. If it fails, run the matrix in Orca and validate manual
-Creality Print import/preview compatibility for the generated artifact.
+one variant in Orca. If Creality fails, run and reproduce the full matrix in
+Orca. Preserve the Creality crash as a known backend limitation; manual GUI
+confirmation is not a completion prerequisite when another accepted path passes.
 Add a guard proving that `slicer_infill_percent=0` cannot overwrite or be
 reported as the Herculean requested percentage.
 Re-run at least one variant to prove normalized configuration and metric
@@ -119,18 +133,23 @@ global slicer state remain unchanged.
 
 # Delivery
 
-Preflight the registered workspace and repository-delivery authority. Create
-the exact owned branch from current `main`, commit and push the slicing harness
-and virtual profile, open a pull request, merge only after the real-backend
-smoke test and required checks pass, return the registered workspace to updated
-`main`, and delete only the owned local and remote feature branch. Missing
-slicer or repository capability enters the repair gate with retained evidence.
+Preflight the registered workspace and repository-delivery authority. For a
+fresh implementation, create the exact owned branch from current `main`; when
+continuing this HC-PS-040 run, continue its already-owned branch and PR rather
+than creating a duplicate. Commit and push the slicing harness and virtual
+profile, open or update the pull request, merge only after one accepted
+qualification path and the named checks pass, return the registered workspace
+to updated `main`, and delete only the owned local and remote feature branch.
+A failed optional backend is retained as evidence and must route to an accepted
+alternative before error-gate exhaustion is considered.
 
 # Completion report
 
 Return the schema-version-1 structured completion result for `HC-PS-040`, with
 backend/package decisions, discovered Creality Print bundle and engine
 identities, Orca identity, the Creality qualification result, any explicit
-fallback decision, exact virtual profile and hashes, five-variant metric
+fallback decision and the successful qualification path (`solid`, `creality`,
+or `orca`), exact virtual profile and hashes, five-variant metric
 artifacts, determinism/import evidence, named checks with commands, warnings,
-and exact branch/HEAD/PR/merged-HEAD identities.
+and exact branch/HEAD/PR/merged-HEAD identities. State explicitly when Creality
+GUI compatibility remains unverified because its CLI/importer crashes.
