@@ -1,0 +1,8 @@
+{
+  "schema_version": 1,
+  "profile_id": "HC-VIRTUAL-FDM-V1",
+  "machine": "machine.json",
+  "process": "process.json",
+  "filament": "filament.json",
+  "handoff": "Herculean bodies use downstream slicer infill 0%; this does not alter or describe requested Herculean density. Support is disabled for every variant."
+}
