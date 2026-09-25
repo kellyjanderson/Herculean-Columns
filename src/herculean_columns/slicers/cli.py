@@ -33,7 +33,9 @@ class CliSlicerBackend:
         if not first or not self.supported_engine.fullmatch(first):
             raise SliceFailure("unsupported_version", f"Unsupported engine identity: {first or 'unknown'}")
         bundle = None
-        plist = self.executable.parents[2] / "Info.plist"
+        # Bundle executables live at App.app/Contents/MacOS/name; Info.plist is
+        # a sibling of MacOS under Contents.
+        plist = self.executable.parents[1] / "Info.plist"
         if plist.exists():
             with plist.open("rb") as stream:
                 info = plistlib.load(stream)

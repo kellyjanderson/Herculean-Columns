@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import plistlib
 from pathlib import Path
 
 import pytest
@@ -32,6 +33,19 @@ def test_unsupported_version_is_structured(tmp_path: Path) -> None:
     with pytest.raises(SliceFailure) as caught:
         CrealityPrintBackend(executable).discover_identity()
     assert caught.value.code == "unsupported_version"
+
+
+def test_bundle_version_is_read_from_contents_info_plist(tmp_path: Path) -> None:
+    executable = tmp_path / "Creality Print.app" / "Contents" / "MacOS" / "CrealityPrint"
+    executable.parent.mkdir(parents=True)
+    executable.write_text("#!/bin/sh\necho Creality-01.09.03.50:\n", encoding="utf-8")
+    executable.chmod(0o755)
+    with (executable.parents[1] / "Info.plist").open("wb") as stream:
+        plistlib.dump({"CFBundleShortVersionString": "7.1.1.4472"}, stream)
+
+    identity = CrealityPrintBackend(executable).discover_identity()
+
+    assert identity.bundle_version == "7.1.1.4472"
 
 
 def test_profile_drift_and_fallback_are_rejected(tmp_path: Path) -> None:

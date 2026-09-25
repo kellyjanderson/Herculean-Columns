@@ -1,11 +1,13 @@
 from __future__ import annotations
 
 import json
+from datetime import datetime, timezone
 from pathlib import Path
 
 import pytest
 
-from herculean_columns.benchmark.compatibility import CompatibilityEvidenceError, model_sha256, validate_creality_import_receipt
+from herculean_columns.benchmark.compatibility import CompatibilityEvidenceError, create_creality_import_receipt, model_sha256, validate_creality_import_receipt
+from herculean_columns.slicers import BackendIdentity
 
 
 def _receipt(model: Path) -> dict[str, object]:
@@ -51,3 +53,62 @@ def test_valid_receipt_preserves_creality_identity(tmp_path: Path) -> None:
     parsed = validate_creality_import_receipt(receipt, model)
     assert parsed.bundle_version == "7.1.1.4472"
     assert parsed.engine_version == "Creality-01.09.03.50"
+
+
+def test_receipt_rejects_identity_that_differs_from_installed_creality(tmp_path: Path) -> None:
+    model = tmp_path / "model.stl"
+    model.write_bytes(b"solid exact\nendsolid exact\n")
+    receipt = tmp_path / "receipt.json"
+    receipt.write_text(json.dumps(_receipt(model)), encoding="utf-8")
+    installed = BackendIdentity("creality-print", "/Applications/Creality Print.app", "b" * 64, "7.2.0", "Creality-01.10.00.00", True)
+
+    with pytest.raises(CompatibilityEvidenceError, match="installed application"):
+        validate_creality_import_receipt(receipt, model, installed)
+
+
+def test_guided_receipt_requires_exact_hash_bound_human_confirmations(tmp_path: Path) -> None:
+    model = tmp_path / "model.stl"
+    model.write_bytes(b"solid exact\nendsolid exact\n")
+    receipt = tmp_path / "receipt.json"
+    identity = BackendIdentity("creality-print", "/Applications/Creality Print.app", "a" * 64, "7.1.1.4472", "Creality-01.09.03.50", True)
+    token = model_sha256(model)[:12]
+    answers = iter(["fixture operator", f"IMPORT {token}", f"PREVIEW {token}"])
+
+    parsed = create_creality_import_receipt(
+        model,
+        receipt,
+        identity,
+        prompt=lambda _: next(answers),
+        now=lambda: datetime(2026, 9, 25, 19, 0, tzinfo=timezone.utc),
+    )
+
+    assert parsed.model_sha256 == model_sha256(model)
+    assert parsed.observed_at == "2026-09-25T19:00:00+00:00"
+    assert receipt.read_text(encoding="utf-8").endswith("\n")
+
+
+def test_guided_receipt_writes_nothing_without_preview_confirmation(tmp_path: Path) -> None:
+    model = tmp_path / "model.stl"
+    model.write_bytes(b"solid exact\nendsolid exact\n")
+    receipt = tmp_path / "receipt.json"
+    identity = BackendIdentity("creality-print", "/Applications/Creality Print.app", "a" * 64, "7.1.1.4472", "Creality-01.09.03.50", True)
+    token = model_sha256(model)[:12]
+    answers = iter(["fixture operator", f"IMPORT {token}", "no"])
+
+    with pytest.raises(CompatibilityEvidenceError, match="Preview was not human-confirmed"):
+        create_creality_import_receipt(model, receipt, identity, prompt=lambda _: next(answers))
+
+    assert not receipt.exists()
+
+
+def test_guided_receipt_refuses_to_overwrite_prior_evidence(tmp_path: Path) -> None:
+    model = tmp_path / "model.stl"
+    model.write_bytes(b"solid exact\nendsolid exact\n")
+    receipt = tmp_path / "receipt.json"
+    receipt.write_text("prior evidence\n", encoding="utf-8")
+    identity = BackendIdentity("creality-print", "/Applications/Creality Print.app", "a" * 64, "7.1.1.4472", "Creality-01.09.03.50", True)
+
+    with pytest.raises(CompatibilityEvidenceError, match="Refusing to overwrite"):
+        create_creality_import_receipt(model, receipt, identity, prompt=lambda _: "unused")
+
+    assert receipt.read_text(encoding="utf-8") == "prior evidence\n"

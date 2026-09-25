@@ -20,6 +20,7 @@ def _parser() -> argparse.ArgumentParser:
     parser.add_argument("--profiles", type=Path, default=Path("profiles/virtual-fdm"))
     parser.add_argument("--backend", choices=("creality", "orca"), default="creality")
     parser.add_argument("--executable", type=Path)
+    parser.add_argument("--creality-executable", type=Path, default=Path("/Applications/Creality Print.app/Contents/MacOS/CrealityPrint"), help="Creality executable used to verify fallback receipt identity")
     parser.add_argument("--timeout", type=float, default=180.0)
     parser.add_argument("--creality-import-receipt", type=Path, help="hash-bound human import/preview receipt required for a Creality-failure fallback")
     parser.add_argument("--fallback-from-creality-failure", action="store_true", help="record that Orca is selected after failed Creality qualification")
@@ -38,7 +39,8 @@ def main() -> int:
         if args.backend != "orca" or args.creality_import_receipt is None:
             raise SystemExit("Creality-failure fallback requires Orca and --creality-import-receipt")
         try:
-            receipt = validate_creality_import_receipt(args.creality_import_receipt, args.herculean)
+            creality_identity = CrealityPrintBackend(args.creality_executable).discover_identity()
+            receipt = validate_creality_import_receipt(args.creality_import_receipt, args.herculean, creality_identity)
         except CompatibilityEvidenceError as exc:
             raise SystemExit(f"invalid Creality compatibility evidence: {exc}") from exc
         fallback_evidence = {"decision": "orca_after_creality_qualification_failure", "creality_import_receipt": asdict(receipt)}
