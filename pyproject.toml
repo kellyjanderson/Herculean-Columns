@@ -1,0 +1,43 @@
+[build-system]
+requires = ["hatchling==1.27.0"]
+build-backend = "hatchling.build"
+
+[project]
+name = "herculean-columns"
+version = "0.1.0"
+description = "Typed structural-graph foundation for Herculean printable infill"
+readme = "README.md"
+requires-python = ">=3.12"
+license = { text = "MIT" }
+dependencies = [
+  "pydantic==2.12.5",
+  "shapely==2.1.2",
+]
+
+[project.optional-dependencies]
+dev = [
+  "hypothesis==6.151.9",
+  "mypy==1.19.1",
+  "pytest==9.0.2",
+  "types-shapely==2.1.0.20260728",
+]
+
+[project.scripts]
+herculean-columns = "herculean_columns.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/herculean_columns"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+addopts = "--strict-markers --strict-config"
+markers = [
+  "unit: focused unit coverage",
+  "regression: named historical defect coverage",
+]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+packages = ["herculean_columns"]
