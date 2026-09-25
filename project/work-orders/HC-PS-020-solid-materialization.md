@@ -7,12 +7,16 @@ base: main
 branch: feature/HC-PS-020-solid-materialization
 scope:
   owns:
+    - pyproject.toml
+    - src/herculean_columns/__init__.py
+    - src/herculean_columns/cli.py
     - src/herculean_columns/geometry/**
     - src/herculean_columns/materialize/**
     - src/herculean_columns/export/**
     - src/herculean_columns/config.py
     - tests/geometry/**
     - tests/materialize/**
+    - tests/export/**
     - tests/fixtures/basic/**
     - project/decisions/**
   may_read:
@@ -88,6 +92,13 @@ percentage, and stable hashes for deterministic inputs.
 Run the complete existing suite, geometry tests, export/readback tests, and
 type checker. Render and inspect every canonical generated fixture before
 claiming the export is previewable.
+
+The required repository checks and their commands are:
+
+- `unit`: `.venv/bin/python -m pytest -m unit`
+- `geometry`: `.venv/bin/python -m pytest tests/geometry tests/materialize`
+- `export`: `.venv/bin/python -m pytest tests/export`
+- `typecheck`: `.venv/bin/python -m mypy src`
 
 # Delivery
 
