@@ -1,24 +1,46 @@
 # Herculean Columns
 
-Herculean Columns is a research project exploring a sparse structural infill
-method for fused-deposition 3D printing. The current prototype plans branching
-load paths; the next development phase will materialize those paths as a
-watertight printable solid for controlled slicer and physical comparisons.
+Herculean Columns is a typed Python research package for planning sparse,
+grounded structural infill. This slice establishes graph correctness; mesh
+booleans, watertight solid export, slicing, and physical claims are deliberately
+deferred.
 
-## Current project authority
+The historical `herculean_columns.py` v0.2 prototype remains unchanged for
+reference. The supported migration entry point is now:
 
-- [Architecture v0.3](project/architecture/herculean-columns-v0.3.md)
-- [Printable-solid implementation plan](project/planning/printable-solid-implementation-plan.md)
-- [Auto-Atumnus Body of Work](project/bodies/HC-PRINTABLE-SOLID-001.yaml)
-- [Work Orders](project/work-orders/)
-- [Research prototype](herculean_columns.py)
+```bash
+.venv/bin/herculean-columns --help
+```
 
-The historical `Herculean Columns — Architecture v0.2.docx` is retained as
-source material. Version 0.3 supersedes its prototype-output and validation
-sections.
+## Reproducible local environment
 
-## Status
+Python 3.12 or newer is required. Dependencies and developer tools are pinned
+in `pyproject.toml`; the environment is local and ignored by Git.
 
-The architecture and execution specifications are ready for repository
-admission. Implementation has not started, and no mechanical-performance
-claims have been established.
+```bash
+python3 -m venv .venv
+.venv/bin/python -m pip install --upgrade pip
+.venv/bin/python -m pip install -e '.[dev]'
+```
+
+Run each required check independently:
+
+```bash
+.venv/bin/python -m pytest -m unit
+.venv/bin/python -m pytest -m regression
+.venv/bin/python -m mypy src
+```
+
+Run the complete suite with `.venv/bin/python -m pytest`. Configuration uses
+millimetres, cubic millimetres, and percent. `infill_percent` is required and
+controls Herculean planning independently of any downstream slicer setting.
+
+## Result contract
+
+`HerculeanGenerator.generate()` returns a `GenerationResult`. On success it
+contains a validated graph and deterministic density report. On failure its
+graph is absent and structured diagnostics explain which invariant failed.
+Callers must not forward a failed result to materialization.
+
+Current authority remains the [v0.3 architecture](project/architecture/herculean-columns-v0.3.md)
+and [printable-solid plan](project/planning/printable-solid-implementation-plan.md).
