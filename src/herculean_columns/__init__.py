@@ -13,6 +13,8 @@ from .model import (
     GraphNode,
     StructuralGraph,
 )
+from .materialize import AdmittedSource, MaterializationError, MaterializationReport, MaterializationResult, SolidMaterializer, SourceAdmissionError, admit_source
+from .export import ReadbackEvidence, export_result, readback_stl
 
 __all__ = [
     "Concern",
@@ -29,9 +31,19 @@ __all__ = [
     "HerculeanGenerator",
     "Layer",
     "LayerStackVolume",
+    "AdmittedSource",
+    "MaterializationError",
+    "MaterializationReport",
+    "MaterializationResult",
     "MonotonicIdAllocator",
     "NodeId",
     "Orientation",
+    "ReadbackEvidence",
+    "SolidMaterializer",
+    "SourceAdmissionError",
     "StructuralGraph",
     "VolumeAdapter",
+    "admit_source",
+    "export_result",
+    "readback_stl",
 ]
