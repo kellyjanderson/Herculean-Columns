@@ -1,0 +1,72 @@
+name: HC-PS-020 validation
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  unit:
+    name: unit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: python -m pip install -e '.[dev]'
+      - run: python -m pytest -m unit
+
+  geometry:
+    name: geometry
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: python -m pip install -e '.[dev]'
+      - name: Run geometry checks when the HC-PS-020 test surface exists
+        shell: bash
+        run: |
+          if [[ -d tests/geometry && -d tests/materialize ]]; then
+            python -m pytest tests/geometry tests/materialize
+          else
+            python -c 'import herculean_columns'
+          fi
+
+  export:
+    name: export
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: python -m pip install -e '.[dev]'
+      - name: Run export checks when the HC-PS-020 test surface exists
+        shell: bash
+        run: |
+          if [[ -d tests/export ]]; then
+            python -m pytest tests/export
+          else
+            python -c 'import herculean_columns'
+          fi
+
+  typecheck:
+    name: typecheck
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: python -m pip install -e '.[dev]'
+      - run: python -m mypy src
