@@ -1,0 +1,84 @@
+{
+  "acceptance_tolerance_mm": 0.08,
+  "build_orientation": [
+    0.0,
+    0.0,
+    1.0
+  ],
+  "critical_surfaces": [
+    "z_min",
+    "z_max",
+    "reentrant_corner"
+  ],
+  "dimensions_mm": [
+    24.0,
+    24.0,
+    20.0
+  ],
+  "expected_component_count": 1,
+  "expected_graph_properties": [
+    "no chord crosses the missing quadrant",
+    "single grounded component"
+  ],
+  "fixture_id": "concave-l",
+  "label": null,
+  "physical_setup": "inspect the re-entrant corner and compress on Z faces",
+  "provenance": {
+    "generator": "herculean_columns.fixtures.corpus",
+    "source_kind": "parametric",
+    "units": "mm"
+  },
+  "purpose": "illegal-chord and clipping-discontinuity detection",
+  "schema_version": 1,
+  "variants": [
+    {
+      "achieved_infill_percent": 0.08466469002209144,
+      "configuration_sha256": "10a157fb1d0e12474f851fd6d3ef3e1f0b6e40f72fd1a62f9f9f712e352edb50",
+      "infill_percent": 10.0,
+      "inspection": {
+        "exterior_bounds_deviation_mm": 0.0,
+        "exterior_equivalent": true,
+        "output": {
+          "bounds_mm": [
+            [
+              -12.0,
+              -12.0,
+              -10.0
+            ],
+            [
+              12.0,
+              12.0,
+              10.0
+            ]
+          ],
+          "component_count": 1,
+          "volume_mm3": 3091.7035361508442,
+          "watertight": true,
+          "winding_consistent": true
+        },
+        "source": {
+          "bounds_mm": [
+            [
+              -12.0,
+              -12.0,
+              -10.0
+            ],
+            [
+              12.0,
+              12.0,
+              10.0
+            ]
+          ],
+          "component_count": 1,
+          "volume_mm3": 6400.0,
+          "watertight": true,
+          "winding_consistent": true
+        },
+        "valid": true
+      },
+      "manifest": "source-herculean-50bd2f337cbe3f3d.manifest.json",
+      "preview": "source-herculean-50bd2f337cbe3f3d.preview.svg",
+      "stl": "source-herculean-50bd2f337cbe3f3d.stl"
+    }
+  ]
+}

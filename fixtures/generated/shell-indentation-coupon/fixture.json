@@ -1,0 +1,83 @@
+{
+  "acceptance_tolerance_mm": 0.08,
+  "build_orientation": [
+    0.0,
+    0.0,
+    1.0
+  ],
+  "critical_surfaces": [
+    "z_max_center",
+    "bottom_perimeter"
+  ],
+  "dimensions_mm": [
+    36.0,
+    36.0,
+    12.0
+  ],
+  "expected_component_count": 1,
+  "expected_graph_properties": [
+    "center-to-shell load path",
+    "single grounded component"
+  ],
+  "fixture_id": "shell-indentation-coupon",
+  "label": null,
+  "physical_setup": "indent the center of the top face while supporting the perimeter",
+  "provenance": {
+    "generator": "herculean_columns.fixtures.corpus",
+    "source_kind": "parametric",
+    "units": "mm"
+  },
+  "purpose": "local shell-collapse resistance",
+  "schema_version": 1,
+  "variants": [
+    {
+      "achieved_infill_percent": 0.025190933066579796,
+      "configuration_sha256": "10a157fb1d0e12474f851fd6d3ef3e1f0b6e40f72fd1a62f9f9f712e352edb50",
+      "infill_percent": 10.0,
+      "inspection": {
+        "exterior_bounds_deviation_mm": 0.0,
+        "exterior_equivalent": true,
+        "output": {
+          "bounds_mm": [
+            [
+              -18.0,
+              -18.0,
+              -6.0
+            ],
+            [
+              18.0,
+              18.0,
+              6.0
+            ]
+          ],
+          "component_count": 1,
+          "volume_mm3": 5458.311161096732,
+          "watertight": true,
+          "winding_consistent": true
+        },
+        "source": {
+          "bounds_mm": [
+            [
+              -18.0,
+              -18.0,
+              -6.0
+            ],
+            [
+              18.0,
+              18.0,
+              6.0
+            ]
+          ],
+          "component_count": 1,
+          "volume_mm3": 15552.0,
+          "watertight": true,
+          "winding_consistent": true
+        },
+        "valid": true
+      },
+      "manifest": "source-herculean-0f5dc0c4344fb320.manifest.json",
+      "preview": "source-herculean-0f5dc0c4344fb320.preview.svg",
+      "stl": "source-herculean-0f5dc0c4344fb320.stl"
+    }
+  ]
+}
