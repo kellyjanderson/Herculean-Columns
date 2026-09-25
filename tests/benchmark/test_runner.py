@@ -49,3 +49,15 @@ def test_stale_content_addressed_destination_is_rejected(tmp_path: Path) -> None
     runner.run(_variants(tmp_path))
     with pytest.raises(BenchmarkFailure, match="stale artifact reuse"):
         runner.run(_variants(tmp_path))
+
+
+def test_fallback_evidence_is_content_addressed_and_recorded(tmp_path: Path) -> None:
+    class AuthoritativeFake(FakeSlicerBackend):
+        def discover_identity(self):  # type: ignore[no-untyped-def]
+            return super().discover_identity().__class__("fixture", "fixture", "0" * 64, "1", "fixture-1", True)
+
+    evidence = {"decision": "orca_after_creality_qualification_failure", "creality_import_receipt": {"model_sha256": "a" * 64}}
+    runner = BenchmarkRunner(AuthoritativeFake(), _profile_root(tmp_path), tmp_path / "out", fallback_evidence=evidence)
+    result = runner.run(_variants(tmp_path))
+    manifest = json.loads((result / "manifest.json").read_text(encoding="utf-8"))
+    assert manifest["fallback_evidence"] == evidence

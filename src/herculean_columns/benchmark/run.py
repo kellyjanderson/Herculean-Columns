@@ -41,10 +41,11 @@ def load_profiles(root: Path) -> ProfileBundle:
 
 
 class BenchmarkRunner:
-    def __init__(self, backend: SlicerBackend, profile_root: Path, output_root: Path) -> None:
+    def __init__(self, backend: SlicerBackend, profile_root: Path, output_root: Path, *, fallback_evidence: dict[str, object] | None = None) -> None:
         self.backend = backend
         self.base_profiles = load_profiles(profile_root)
         self.output_root = output_root
+        self.fallback_evidence = fallback_evidence
 
     def _variant_profiles(self, variant: Variant, work: Path) -> ProfileBundle:
         profile_dir = work / "profiles"
@@ -69,7 +70,7 @@ class BenchmarkRunner:
         if not identity.authoritative:
             raise BenchmarkFailure("Non-authoritative backend cannot create comparison evidence")
         input_identity = [{"name": v.name, "model_sha256": _sha(v.model), "requested_percent": v.requested_percent, "slicer_infill_percent": v.slicer_infill_percent} for v in variants]
-        run_key = hashlib.sha256(json.dumps({"backend": asdict(identity), "profiles": self.base_profiles.hashes, "variants": input_identity}, sort_keys=True).encode()).hexdigest()
+        run_key = hashlib.sha256(json.dumps({"backend": asdict(identity), "profiles": self.base_profiles.hashes, "variants": input_identity, "fallback_evidence": self.fallback_evidence}, sort_keys=True).encode()).hexdigest()
         final = self.output_root / run_key
         if final.exists():
             raise BenchmarkFailure(f"stale artifact reuse refused: {final}")
@@ -92,7 +93,7 @@ class BenchmarkRunner:
                     raise BenchmarkFailure("slicer infill overwrote Herculean requested percentage")
                 (variant_dir / "metrics.json").write_text(json.dumps(metrics, sort_keys=True, indent=2) + "\n", encoding="utf-8")
                 records.append(metrics)
-            manifest = {"schema_version": 1, "run_id": run_key, "backend": asdict(identity), "base_profile_hashes": self.base_profiles.hashes, "variants": records}
+            manifest = {"schema_version": 1, "run_id": run_key, "backend": asdict(identity), "base_profile_hashes": self.base_profiles.hashes, "fallback_evidence": self.fallback_evidence, "variants": records}
             (staging / "manifest.json").write_text(json.dumps(manifest, sort_keys=True, indent=2) + "\n", encoding="utf-8")
             with (staging / "metrics.csv").open("w", newline="", encoding="utf-8") as stream:
                 writer = csv.DictWriter(stream, fieldnames=["variant", "pattern", "requested_herculean_percent", "achieved_herculean_percent", "slicer_infill_percent", "estimated_time_seconds", "filament_length_mm", "filament_mass_g", "deposited_volume_mm3", "extrusion_distance_mm", "travel_distance_mm", "retractions", "restarts", "artifact_sha256"])
